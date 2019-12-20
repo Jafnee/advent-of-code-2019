@@ -40,18 +40,17 @@ def move(cur_pos: Coord, action: str) -> Iterable[Coord]:
     yield (x, y)
 
     # e.g action = R1337
-    direction = action[:1]
-    steps = int(action[1:])
+    direction = action[:1]  # 'R'
+    steps = int(action[1:])  # 1337
 
-    # FIXME: Could DRY this up
-    if direction == 'R':
-        yield from ((x + step, y) for step in range(1, steps+1))
-    elif direction == 'L':
-        yield from ((x - step, y) for step in range(1, steps+1))
-    elif direction == 'U':
-        yield from ((x, y + step) for step in range(1, steps+1))
-    elif direction == 'D':
-        yield from ((x, y - step) for step in range(1, steps+1))
+    step_fn = {
+        'R': lambda step: (x + step, y),
+        'L': lambda step: (x - step, y),
+        'U': lambda step: (x, y + step),
+        'D': lambda step: (x, y - step),
+    }
+    # Coordinates yielded after every action
+    yield from (step_fn[direction](step) for step in range(1, steps+1))
 
 
 def get_distance(x: int, y: int) -> int:
