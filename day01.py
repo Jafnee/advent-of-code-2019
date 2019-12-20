@@ -1,6 +1,3 @@
-from math import floor
-
-
 def pt1(masses):
     return sum(get_fuel(mass) for mass in masses)
 
@@ -9,8 +6,8 @@ def pt2(masses):
     return sum(get_fuel_rec(mass) for mass in masses)
 
 
-def get_fuel(mass):
-    return floor(int(mass) / 3) - 2
+def get_fuel(mass: int):
+    return mass // 3 - 2
 
 
 def get_fuel_rec(mass):
@@ -32,6 +29,6 @@ def test_fuel_rec():
 
 
 if __name__ == '__main__':
-    masses = list(open('day01.txt', 'r'))
+    masses = [int(mass) for mass in open('day01.txt', 'r')]
     print(pt1(masses))
     print(pt2(masses))
